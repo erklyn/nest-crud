@@ -1,4 +1,14 @@
-import { Controller, Get, Param, Post, Body } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Post,
+  Body,
+  ParseIntPipe,
+  HttpStatus,
+  UsePipes,
+} from '@nestjs/common';
+import { JoiValidationPipe } from '../common/pipes/joi.validation';
 import { CatsService } from './cats.service';
 import { CreateCatDto } from './dtos/create-cat.dto';
 import { Cat } from './interfaces/cat.interface';
@@ -7,6 +17,7 @@ import { Cat } from './interfaces/cat.interface';
 export class CatsController {
   constructor(private catsService: CatsService) {}
   @Post()
+  @UsePipes(new JoiValidationPipe(createCatSchema))
   async create(@Body() createCatDto: CreateCatDto) {
     this.catsService.create(createCatDto);
   }
@@ -15,7 +26,13 @@ export class CatsController {
     return this.catsService.findAll();
   }
   @Get(':id')
-  findOne(@Param('id') id: string): string {
+  findOne(
+    @Param(
+      'id',
+      new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
+    )
+    id: number,
+  ): string {
     console.log(id);
     return `Return the info of the ${id}. Cat`;
   }
