@@ -9,7 +9,7 @@ const config: MysqlConnectionOptions = {
   database: 'nest-test',
   entities: ['dist/src/**/*.entity.js '],
   //Auto drops and reinitiate a table so no no for prod
-  synchronize: false,
+  synchronize: true,
   migrations: ['dist/src/db/migrations/*.js'],
   cli: {
     migrationsDir: 'src/db/migrations',

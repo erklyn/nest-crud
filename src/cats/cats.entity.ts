@@ -1,7 +1,7 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class User {
+export class Cat {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -9,5 +9,8 @@ export class User {
   name: string;
 
   @Column()
-  height: number;
+  breed: string;
+
+  @Column()
+  age: number;
 }
