@@ -6,10 +6,9 @@ import {
   Body,
   ParseIntPipe,
   HttpStatus,
-  UsePipes,
   UseGuards,
-  SetMetadata,
 } from '@nestjs/common';
+import { Roles } from '../common/decorators/roles.decorator';
 import { RolesGuard } from '../common/guards/roles.guard';
 import { ValidationPipe } from '../common/pipes/validation.pipe';
 import { CatsService } from './cats.service';
@@ -17,11 +16,11 @@ import { CreateCatDto } from './dtos/create-cat.dto';
 import { Cat } from './interfaces/cat.interface';
 
 @Controller('cats')
-@UseGuards(new RolesGuard())
+@UseGuards(RolesGuard)
 export class CatsController {
   constructor(private catsService: CatsService) {}
   @Post()
-  @SetMetadata('roles', ['admin'])
+  @Roles('admin')
   async create(@Body(new ValidationPipe()) createCatDto: CreateCatDto) {
     this.catsService.create(createCatDto);
   }
