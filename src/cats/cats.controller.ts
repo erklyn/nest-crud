@@ -1,4 +1,13 @@
-import { Controller, Get, Param, Post, Body, Patch } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Post,
+  Body,
+  Patch,
+  Delete,
+} from '@nestjs/common';
+import { DeleteResult, UpdateResult } from 'typeorm';
 import { ValidationPipe } from '../common/pipes/validation.pipe';
 import { CatsService } from './cats.service';
 import { CreateCatDto } from './dtos/create-cat.dto';
@@ -22,8 +31,16 @@ export class CatsController {
   ): Promise<Cats> {
     return this.catsService.getOneById(id);
   }
-  @Patch()
-  updateOne(cat: Cats): Promise<Cats> {
-    return this.catsService.updateCat(cat);
+  @Patch(':id')
+  updateOne(@Body() cat: Cats, @Param('id') id: number): Promise<UpdateResult> {
+    return this.catsService.updateCat(cat, id);
+  }
+
+  @Delete()
+  deleteOne(
+    @Param('id')
+    id: number,
+  ): Promise<DeleteResult> {
+    return this.catsService.deleteCat(id);
   }
 }

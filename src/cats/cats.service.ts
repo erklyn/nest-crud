@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeleteResult, Repository } from 'typeorm';
+import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { Cat } from './cats.entity';
 import { Cats } from './interfaces/cat.interface';
 
@@ -13,12 +13,8 @@ export class CatsService {
     return this.userRepo.save(newCat);
   }
 
-  async updateCat(cat: Cats): Promise<Cats> {
-    let selectCat = await this.getOneById(cat.id);
-
-    selectCat = cat;
-
-    return this.userRepo.save(selectCat);
+  async updateCat(cat: Cats, id: number): Promise<UpdateResult> {
+    return this.userRepo.update(id, cat);
   }
 
   getOneById(id: number): Promise<Cats> {
@@ -29,7 +25,9 @@ export class CatsService {
     return this.userRepo.find();
   }
 
-  async deleteCat(cat: Cats): Promise<DeleteResult> {
+  async deleteCat(id: number): Promise<DeleteResult> {
+    const cat = await this.getOneById(id);
+
     return this.userRepo.delete(cat);
   }
 }
