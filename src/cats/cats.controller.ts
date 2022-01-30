@@ -17,8 +17,10 @@ import { Cats } from './interfaces/cat.interface';
 export class CatsController {
   constructor(private catsService: CatsService) {}
   @Post()
-  async create(@Body(new ValidationPipe()) createCatDto: CreateCatDto) {
-    this.catsService.create(createCatDto);
+  async create(
+    @Body(new ValidationPipe()) createCatDto: CreateCatDto,
+  ): Promise<Cats> {
+    return this.catsService.create(createCatDto);
   }
   @Get()
   async findAll(): Promise<Cats[]> {
@@ -36,7 +38,7 @@ export class CatsController {
     return this.catsService.updateCat(cat, id);
   }
 
-  @Delete()
+  @Delete(':id')
   deleteOne(
     @Param('id')
     id: number,
