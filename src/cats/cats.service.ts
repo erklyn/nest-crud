@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Owner } from 'src/owner/owner.entity';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { Cat } from './cats.entity';
 import { Cats } from './interfaces/cat.interface';
