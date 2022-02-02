@@ -11,15 +11,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
 
 @Module({
-  imports: [
-    CatsModule,
-    TypeOrmModule.forRoot(config),
-    OwnerModule,
-    GraphQLModule.forRoot({
-      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
-      sortSchema: true,
-    }),
-  ],
+  imports: [CatsModule, TypeOrmModule.forRoot(config), OwnerModule],
   controllers: [AppController],
   providers: [AppService],
 })
