@@ -7,8 +7,6 @@ import { CatsController } from './cats/cats.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { OwnerModule } from './owner/owner.module';
 import config from '../ormconfig';
-import { GraphQLModule } from '@nestjs/graphql';
-import { join } from 'path';
 
 @Module({
   imports: [CatsModule, TypeOrmModule.forRoot(config), OwnerModule],
